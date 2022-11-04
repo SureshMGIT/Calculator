@@ -12,24 +12,27 @@ final class ViewController: UIViewController {
   @IBOutlet private weak var keyInputLabel: UILabel!
   @IBOutlet private weak var collectionViewHightConstraint: NSLayoutConstraint!
 
-  @IBOutlet weak var clearButton: UIButton!
+  @IBOutlet private weak var clearButton: UIButton!
   private let viewModel = ViewModel()
 
   override func viewDidLoad() {
     super.viewDidLoad()
     // Do any additional setup after loading the view.
+    setUp()
+  }
 
+  func setUp() {
     clearButton.isHidden = true
     viewModel.createDataSource()
     collectionViewHightConstraint.constant = UIScreen.main.bounds.width
   }
 
-  @IBAction func clearAction(_ sender: Any) {
+  @IBAction private func clearAction(_ sender: Any) {
     keyInputLabel.text = ""
     clearButton.isHidden = true
   }
   
-  @IBAction func backspaceAction(_ sender: Any) {
+  @IBAction private func backspaceAction(_ sender: Any) {
     if var text = keyInputLabel.text, !text.isEmpty {
       text.removeLast()
       keyInputLabel.text = text

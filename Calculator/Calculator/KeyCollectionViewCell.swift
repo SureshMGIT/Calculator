@@ -7,11 +7,11 @@
 
 import UIKit
 
-class KeyCollectionViewCell: UICollectionViewCell {
+final class KeyCollectionViewCell: UICollectionViewCell {
     
-  @IBOutlet weak var titleButton: UIButton!
+  @IBOutlet private weak var titleButton: UIButton!
 
-  var index: Int?
+  private var index: Int?
   weak var actionDelegate: ActionDelegate?
 
   func setupCell(data: ActionKey, index: Int) {
@@ -22,7 +22,7 @@ class KeyCollectionViewCell: UICollectionViewCell {
     self.index = index
   }
 
-  @IBAction func tapAction(_ sender: Any) {
+  @IBAction private func tapAction(_ sender: Any) {
     if let index = index {
       actionDelegate?.performCalculatorAction(index: index)
     }

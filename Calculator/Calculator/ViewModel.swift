@@ -49,7 +49,7 @@ final class ViewModel {
 
   func performCalculation(text: String) -> String {
     var inputText = text
-    if text.last == "*" || text.last == "/" || text.last == "+" || text.last == "-" {
+    if text.last == "*" || text.last == "/" || text.last == "+" || text.last == "-" || text.last == "." {
       inputText.removeLast()
     }
     var numbers: [String] = []
@@ -68,8 +68,9 @@ final class ViewModel {
           numbers.append(String(subString))
           startIndex = inputText.index(after: endIndex)
         } else {
-          let endIndex = inputText.index(startIndex, offsetBy: item.offset - 1)
-          let subString = inputText[startIndex...endIndex]
+          let endIndex = inputText.index(inputText.startIndex, offsetBy: item.offset - 1)
+          let index1 = inputText.index(after: startIndex)
+          let subString = inputText[index1...endIndex]
           numbers.append(String(subString))
           startIndex = inputText.index(after: endIndex)
         }
@@ -77,28 +78,112 @@ final class ViewModel {
       }
       if item.offset == inputText.count - 1 {
         let endIndex = inputText.endIndex
-        let subString = inputText[startIndex...endIndex]
+        let index1 = inputText.index(after: startIndex)
+        let subString = inputText[index1..<endIndex]
         numbers.append(String(subString))
       }
     }
-    var operatorsCopy = operators
     var numbersCopy = numbers
     for item in operators.enumerated() {
+      var value = ""
       switch item.element {
       case "+":
-        let lhs = numbers
-        break
+        let lhs = convertNumeric(text: numbersCopy[0])
+        let rhs = convertNumeric(text: numbersCopy[1])
+        if let lhsValue = lhs as? Int, let rhsValue = rhs as? Int {
+          let additionValue = addtionOperation(lhs: lhsValue,
+                                               rhs: rhsValue)
+          value = String(additionValue)
+        } else if let lhsValue = lhs as? Double, let rhsValue = rhs as? Double {
+          let additionValue = addtionOperation(lhs: lhsValue,
+                                               rhs: rhsValue)
+          value = String(additionValue)
+        } else {
+          let addtionValue = addtionOperation(lhs: Double(numbersCopy[0]) ?? 0, rhs: Double(numbersCopy[1]) ?? 0)
+          value = String(addtionValue)
+        }
       case "-":
-        break
+        let lhs = convertNumeric(text: numbersCopy[0])
+        let rhs = convertNumeric(text: numbersCopy[1])
+        if let lhsValue = lhs as? Int, let rhsValue = rhs as? Int {
+          let sunstractionValue = substractionOperation(lhs: lhsValue,
+                                               rhs: rhsValue)
+          value = String(sunstractionValue)
+        } else if let lhsValue = lhs as? Double, let rhsValue = rhs as? Double {
+          let sunstractionValue = substractionOperation(lhs: lhsValue,
+                                               rhs: rhsValue)
+          value = String(sunstractionValue)
+        } else {
+          let sunstractionValue = substractionOperation(lhs: Double(numbersCopy[0]) ?? 0, rhs: Double(numbersCopy[1]) ?? 0)
+          value = String(sunstractionValue)
+        }
       case "*":
-        break
+        let lhs = convertNumeric(text: numbersCopy[0])
+        let rhs = convertNumeric(text: numbersCopy[1])
+        if let lhsValue = lhs as? Int, let rhsValue = rhs as? Int {
+          let multiplicationValue = multiplicationOperation(lhs: lhsValue,
+                                                    rhs: rhsValue)
+          value = String(multiplicationValue)
+        } else if let lhsValue = lhs as? Double, let rhsValue = rhs as? Double {
+          let multiplicationValue = multiplicationOperation(lhs: lhsValue,
+                                                    rhs: rhsValue)
+          value = String(multiplicationValue)
+        } else {
+          let multiplicationValue = multiplicationOperation(lhs: Double(numbersCopy[0]) ?? 0, rhs: Double(numbersCopy[1]) ?? 0)
+          value = String(multiplicationValue)
+        }
       case "/":
-        break
+        let lhs = convertNumeric(text: numbersCopy[0])
+        let rhs = convertNumeric(text: numbersCopy[1])
+        let divisionValue = divisionOperation(lhs: lhs, rhs: rhs)
+        if let value1 = divisionValue as? Int {
+          value = String(value1)
+        } else if let value2 = divisionValue as? Double {
+          value = String(value2)
+        }
+
       default:
         break
       }
+      numbersCopy.removeFirst()
+      numbersCopy.removeFirst()
+      numbersCopy.insert(value, at: 0)
     }
-    return text
+    return numbersCopy.first ?? ""
+  }
+
+  func convertNumeric(text: String) -> Any {
+    if text.contains(".") {
+      let doubleValue = NumberFormatter().number(from: text)?.doubleValue
+      return (text as NSString).doubleValue
+    } else {
+      return Int(text) ?? 0
+    }
+  }
+
+  func addtionOperation<T: Numeric>(lhs: T, rhs: T) -> T {
+    return lhs + rhs
+  }
+
+  func substractionOperation<T: Numeric>(lhs: T, rhs: T) -> T {
+    return lhs - rhs
+  }
+
+  func multiplicationOperation<T: Numeric>(lhs: T, rhs: T) -> T {
+    return lhs * rhs
+  }
+
+  func divisionOperation(lhs: Any, rhs: Any) -> Any {
+    if let valueLhs = lhs as? Int, let valueRhs = rhs as? Int {
+      return valueLhs / valueRhs
+    } else if let valueLhs = lhs as? Double, let valueRhs = rhs as? Double {
+      return valueLhs / valueRhs
+    } else if let valueLhs = lhs as? Int, let valueRhs = rhs as? Double {
+      return Double(valueLhs) / valueRhs
+    } else if let valueLhs = lhs as? Double, let valueRhs = rhs as? Int {
+      return valueLhs / Double(valueRhs)
+    }
+    return 0
   }
 }
 
@@ -111,11 +196,4 @@ struct ActionKey {
 enum ActionType {
   case typing
   case action
-}
-
-enum Operators: Character {
-  case addition = "+"
-  case substraction = "-"
-  case multplication = "*"
-  case division = "/"
 }
