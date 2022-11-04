@@ -12,6 +12,8 @@
 		FA7AA7612914C9EE00D0C55E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FA7AA75F2914C9EE00D0C55E /* Main.storyboard */; };
 		FA7AA7632914C9F100D0C55E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FA7AA7622914C9F100D0C55E /* Assets.xcassets */; };
 		FA7AA7662914C9F100D0C55E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FA7AA7642914C9F100D0C55E /* LaunchScreen.storyboard */; };
+		FA7AA76E2914EA9600D0C55E /* KeyCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7AA76D2914EA9600D0C55E /* KeyCollectionViewCell.swift */; };
+		FA7AA7702914EB4700D0C55E /* ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7AA76F2914EB4700D0C55E /* ViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +24,8 @@
 		FA7AA7622914C9F100D0C55E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		FA7AA7652914C9F100D0C55E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		FA7AA7672914C9F100D0C55E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		FA7AA76D2914EA9600D0C55E /* KeyCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyCollectionViewCell.swift; sourceTree = "<group>"; };
+		FA7AA76F2914EB4700D0C55E /* ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,6 +64,8 @@
 				FA7AA7622914C9F100D0C55E /* Assets.xcassets */,
 				FA7AA7642914C9F100D0C55E /* LaunchScreen.storyboard */,
 				FA7AA7672914C9F100D0C55E /* Info.plist */,
+				FA7AA76D2914EA9600D0C55E /* KeyCollectionViewCell.swift */,
+				FA7AA76F2914EB4700D0C55E /* ViewModel.swift */,
 			);
 			path = Calculator;
 			sourceTree = "<group>";
@@ -137,6 +143,8 @@
 			files = (
 				FA7AA75E2914C9EE00D0C55E /* ViewController.swift in Sources */,
 				FA7AA75A2914C9EE00D0C55E /* AppDelegate.swift in Sources */,
+				FA7AA7702914EB4700D0C55E /* ViewModel.swift in Sources */,
+				FA7AA76E2914EA9600D0C55E /* KeyCollectionViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
